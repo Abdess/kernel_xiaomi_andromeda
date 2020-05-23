@@ -1594,6 +1594,12 @@ config MACH_XIAOMI_RAPHAEL
         help
           Support for Xiaomi K20 Pro
 
+config MACH_XIAOMI_ANDROMEDA
+        bool "polaris board"
+        select MACH_XIAOMI_SM8150
+        help
+          Support for Xiaomi Mi Mix 3 5G
+
 endmenu
 
 endmenu

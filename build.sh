@@ -5,7 +5,7 @@ export KBUILD_BUILD_HOST=CuntsSpace
 
 make ARCH=arm64 \
 	O=${OUT_DIR} \
-	raphael_defconfig \
+	andromeda_defconfig \
 	-j4
 
 scripts/config --file ${OUT_DIR}/.config \
@@ -20,7 +20,7 @@ make O=${OUT_DIR} \
 	olddefconfig
 cd ../
 
-PATH=/home/utsavthecunt/proton-clang/bin/:$PATH
+PATH="$HOME/toolchains/proton-clang/bin:$PATH"
 
 make ARCH=arm64 \
 	O=out \

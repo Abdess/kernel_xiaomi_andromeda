@@ -5797,7 +5797,6 @@ CONFIG_SBITMAP=y
 # Xiaomi configuration options
 #
 CONFIG_MACH_XIAOMI=y
-CONFIG_MACH_XIAOMI_SM8150=y
 
 #
 # Xiaomi board selection
