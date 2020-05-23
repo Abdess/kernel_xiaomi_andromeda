@@ -669,14 +669,14 @@ static ssize_t up_rate_limit_us_show(struct gov_attr_set *attr_set, char *buf)
 {
 	struct sugov_tunables *tunables = to_sugov_tunables(attr_set);
 
-	return snprintf(buf, PAGE_SIZE, "%u\n", tunables->up_rate_limit_us);
+	return scnprintf(buf, PAGE_SIZE, "%u\n", tunables->up_rate_limit_us);
 }
 
 static ssize_t down_rate_limit_us_show(struct gov_attr_set *attr_set, char *buf)
 {
 	struct sugov_tunables *tunables = to_sugov_tunables(attr_set);
 
-	return snprintf(buf, PAGE_SIZE, "%u\n", tunables->down_rate_limit_us);
+	return scnprintf(buf, PAGE_SIZE, "%u\n", tunables->down_rate_limit_us);
 }
 
 static ssize_t up_rate_limit_us_store(struct gov_attr_set *attr_set,
@@ -1174,8 +1174,8 @@ static void sugov_stop(struct cpufreq_policy *policy)
 static void sugov_limits(struct cpufreq_policy *policy)
 {
 	struct sugov_policy *sg_policy = policy->governor_data;
-	unsigned long flags, now;
-	unsigned int freq;
+	unsigned long flags;
+	unsigned int ret;
 
 	if (!policy->fast_switch_enabled) {
 		mutex_lock(&sg_policy->work_lock);
@@ -1187,16 +1187,12 @@ static void sugov_limits(struct cpufreq_policy *policy)
 		mutex_unlock(&sg_policy->work_lock);
 	} else {
 		raw_spin_lock_irqsave(&sg_policy->update_lock, flags);
-		freq = policy->cur;
-		now = ktime_get_ns();
-
-		/*
-		 * cpufreq_driver_resolve_freq() has a clamp, so we do not need
-		 * to do any sort of additional validation here.
-		 */
-		freq = cpufreq_driver_resolve_freq(policy, freq);
-		sg_policy->cached_raw_freq = freq;
-		sugov_fast_switch(sg_policy, now, freq);
+		sugov_track_cycles(sg_policy, sg_policy->policy->cur,
+				   ktime_get_ns());
+		ret = cpufreq_policy_apply_limits_fast(policy);
+		if (ret && policy->cur != ret) {
+			policy->cur = ret;
+		}
 		raw_spin_unlock_irqrestore(&sg_policy->update_lock, flags);
 	}
 

@@ -43,10 +43,6 @@
 		qca,bt-vdd-ldo-current-level = <0>; /* LPM/PFM */
 	};
 
-	mtp_batterydata: qcom,battery-data {
-		qcom,batt-id-range-pct = <15>;
-		#include "batterydata-E5G-coslight-3700mah.dtsi"
-	};
 
 	extcon_usb1: extcon_usb1 {
 		compatible = "linux,extcon-usb-gpio";
@@ -298,24 +294,6 @@
 	status = "ok";
 };
 
-&ufshc_mem {
-	vdd-hba-supply = <&ufs_phy_gdsc>;
-	vdd-hba-fixed-regulator;
-	vcc-supply = <&pm8150_l10>;
-	vcc-voltage-level = <2504000 2950000>;
-	vcc-low-voltage-sup;
-	vccq-supply = <&pm8150_l9>;
-	vccq2-supply = <&pm8150_s4>;
-	vcc-max-microamp = <750000>;
-	vccq-max-microamp = <700000>;
-	vccq2-max-microamp = <750000>;
-
-	qcom,vddp-ref-clk-supply = <&pm8150_l9>;
-	qcom,vddp-ref-clk-max-microamp = <100>;
-
-	status = "ok";
-};
-
 &spmi_debug_bus {
 	status = "ok";
 };
@@ -374,14 +352,12 @@
 		      <&pm8150b_vadc ADC_USB_IN_I>,
 		      <&pm8150b_vadc ADC_SBUx>,
 		      <&pm8150b_vadc ADC_VPH_PWR>,
-		      <&pm8150b_vadc ADC_CHG_TEMP>,
-		      <&pm8150b_vadc ADC_USB_IN_V_16>;
+		      <&pm8150b_vadc ADC_CHG_TEMP>;
 	io-channel-names = "mid_voltage",
 			   "usb_in_current",
 			   "sbux_res",
 			   "vph_voltage",
-			   "chg_temp",
-			   "usb_in_voltage";
+			   "chg_temp";
 	qcom,battery-data = <&mtp_batterydata>;
 	qcom,sw-jeita-enable;
 	qcom,wd-bark-time-secs = <16>;

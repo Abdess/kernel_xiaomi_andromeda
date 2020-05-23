@@ -378,6 +378,7 @@
 				};
 			};
 
+			/*
 			pcie0_perst_default: pcie0_perst_default {
 				mux {
 					pins = "gpio35";
@@ -390,8 +391,9 @@
 					bias-pull-down;
 				};
 			};
+			*/
 
-			pcie0_wake_default: pcie0_wake_default {
+/*			pcie0_wake_default: pcie0_wake_default {
 				mux {
 					pins = "gpio37";
 					function = "gpio";
@@ -403,6 +405,7 @@
 					bias-pull-up;
 				};
 			};
+*/
 		};
 
 		pcie1 {
@@ -2537,6 +2540,19 @@
 		};
 
 		tert_tdm {
+			cs35l41_int_default: cs35l41_int_default {
+				mux {
+					pins = "gpio10";
+					function = "gpio";
+				};
+				config {
+					pins = "gpio10";
+					bias-pull-up;
+					drive-strength = <8>;
+					input-enable;
+				};
+			};
+
 			tert_tdm_sleep: tert_tdm_sleep {
 				mux {
 					pins = "gpio133", "gpio134";

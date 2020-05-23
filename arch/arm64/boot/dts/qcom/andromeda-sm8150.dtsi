@@ -200,6 +200,14 @@ And public attribution of xiaomi platforms(like E5 5G and so and)
 	};
 };
 
+&vendor {
+	mtp_batterydata: qcom,battery-data {
+		qcom,batt-id-range-pct = <15>;
+		#include "batterydata-E5G-coslight-3700mah.dtsi"
+		#include "fg-gen4-batterydata-alium-3600mah_E5G.dtsi"
+	};
+};
+
 &pm8150b_fg {
 	qcom,battery-data = <&mtp_batterydata>;
 	qcom,rapid-soc-dec-en;
@@ -471,6 +479,10 @@ And public attribution of xiaomi platforms(like E5 5G and so and)
 };
 
 &pm8150l_adc_tm {
+	io-channels = <&pm8150_vadc ADC_XO_THERM_PU2>,
+			<&pm8150_vadc ADC_AMUX_THM2_PU2>,
+			<&pm8150_vadc ADC_AMUX_THM3_PU2>;
+
 	cam_therm0 {
 		reg = <ADC_AMUX_THM1_PU2>;
 		qcom,ratiometric;
@@ -488,6 +500,24 @@ And public attribution of xiaomi platforms(like E5 5G and so and)
 		qcom,ratiometric;
 		qcom,hw-settle-time = <200>;
 	};
+};
+
+&vbat_lvl0 {
+	temperature = <3200>;
+	hysteresis = <200>;
+	type = "passive";
+};
+
+&vbat_lvl1 {
+	temperature = <3000>;
+	hysteresis = <200>;
+	type = "passive";
+};
+
+&vbat_lvl2 {
+	temperature = <2800>;
+	hysteresis = <200>;
+	type = "passive";
 };
 
 &thermal_zones {
@@ -587,6 +617,18 @@ And public attribution of xiaomi platforms(like E5 5G and so and)
 				type = "passive";
 			};
 		};
+	};
+
+	pm8150l-vph-lvl0 {
+		status = "disabled";
+	};
+
+	pm8150l-vph-lvl1 {
+		status = "disabled";
+	};
+
+	pm8150l-vph-lvl2 {
+		status = "disabled";
 	};
 };
 

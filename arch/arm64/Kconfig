@@ -1602,6 +1602,12 @@ config MACH_XIAOMI_ANDROMEDA
         help
           Support for Xiaomi Mi Mix 3 5G
 
+config MACH_XIAOMI_CEPHEUS
+        bool "polaris board"
+        select MACH_XIAOMI_SM8150
+        help
+          Support for Xiaomi MI 9
+
 endmenu
 
 endmenu
